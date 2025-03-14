@@ -6,7 +6,9 @@ import argparse
 #GHIDRA_ADDR_OFFSET = 0x100000
 GHIDRA_ADDR_OFFSET = 0
 
-def print_bb(results):
+def print_bb(results, function_name=None):
+    if function_name is not None:
+	    results = [x for x in results if x["function_name"] == function_name]
     for func_data in results:
         func_name = func_data["function_name"]
         blocks = func_data["blocks"]
@@ -40,8 +42,9 @@ def print_bb(results):
 if __name__ ==  "__main__":
     parser = argparse.ArgumentParser('parse_result_json.py', description='pretty print parsed json file')
     parser.add_argument("json_f")
+    parser.add_argument("--function_name", default=None)
     args = parser.parse_args()
 
     with open(args.json_f, "r") as fd:
         data = json.load(fd)
-    print_bb(data)
+    print_bb(data, args.function_name)
