@@ -143,7 +143,7 @@ def objdump_pass(args, imported=False):
                     })
 
     with open(args.output_json, "w") as fd:
-        json.dump(orig_data, fd)
+        json.dump(orig_data, fd, indent=2)
 
 
 
